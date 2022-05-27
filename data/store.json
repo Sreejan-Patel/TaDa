@@ -1,0 +1,14 @@
+{
+    "user_id": "1",
+    "title": "Test",
+    "description": "Social Science Exam ",
+    "start": 1,
+    "start_time": "2022-05-29T00:00",
+    "end_time": "2022-05-29T03:00",
+    "tags": [
+        "test",
+        "social science",
+        "school"
+    ]
+
+}

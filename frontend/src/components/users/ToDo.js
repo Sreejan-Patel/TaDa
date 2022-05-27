@@ -9,21 +9,161 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from "@mui/material/InputLabel";
+import axios from "axios";
+
+const TagsInput = props => {
+  const [tags, setTags] = useState(props.tags);
+  console.log(tags);
+  const removeTags = indexToRemove => {
+    setTags([...tags.filter((_, index) => index !== indexToRemove)]);
+  };
+  const addTags = event => {
+    if (event.target.value !== "") {
+      setTags([...tags, event.target.value]);
+      props.selectedTags([...tags, event.target.value]);
+      event.target.value = "";
+    }
+  };
+  return (
+    <div className="tags-input"
+      style={{
+        display: "flex",
+        flexDirection: "row",
+      }}
+    >
+      <input
+        type="text"
+        onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
+        placeholder="Press enter to add tags"
+        style={{
+          height: '2em',
+          marginTop: '0.5em',
+          marginRight: '0.5em',
+        }}
+      />
+      <ul id="tags"
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          listStyle: "none",
+          padding: 0,
+          margin: 0,
+        }}
+
+      >
+        {tags.map((tag, index) => (
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              backgroundColor: "#0000ff",
+              borderRadius: "1em",
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: "1em",
+              padding: '0.01em',
+              marginTop: "0.5em",
+
+            }}
+          >
+            <h5
+              style={{
+                marginTop: '0em',
+                marginRight: "0.25px",
+                marginBottom: "0px",
+
+                color: "white",
+                padding: "5px",
+                borderRadius: "5px",
+
+
+                marginLeft: "5px",
+                wordSpacing: "10px",
+
+              }}
+            >{tag}</h5>
+
+            <h5 onClick={() => removeTags(index)}
+              style={{
+                marginTop: "0em",
+                marginRight: "10px",
+                marginBottom: "0px",
+                backgroundColor: "#000055",
+                color: "red",
+                padding: "5px",
+                borderRadius: "150px",
+                padding: "0.25em",
+
+                marginLeft: "5px",
+
+              }}
+            >x</h5>
+
+          </div>
+
+
+        ))}
+      </ul>
+
+    </div>
+  );
+};
 
 function ToDo() {
-  const [value, setValue] = useState("");
-  const [dateTime, setDateTime] = useState(new Date());
-  const [start, setStart] = useState(0);
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const selectedTags = tags => {
+    console.log(tags);
+    setTags(tags);
   };
+  //const [value, setValue] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDateTime, setStartDateTime] = useState(new Date());
+  const [endDateTime, setEndDateTime] = useState(new Date());
+  const [tags, setTags] = useState([]);
+  const [start, setStart] = useState(-1);
 
+
+  const handleSubmitStore = (event) => {
+    event.preventDefault();
+    const data = {
+      user_id: "1",
+      title: title,
+      description: description,
+      start: start,
+      start_time: startDateTime,
+      end_time: endDateTime,
+      tags: tags,
+
+    }
+    console.log(data);
+    axios.post('http://localhost:4000/todo/store', data)
+      .then(res => {
+
+        console.log(res.data);
+        window.location.reload();
+      }
+      )
+  }
 
   const handleChangeTimeType = (event) => {
     setStart(event.target.value);
   };
-  const handleChangeTime = (event) => {
-    setDateTime(event.target.value);
+  const handleChangeStartTime = (event) => {
+    setStartDateTime(event.target.value);
+  };
+
+  const handleChangeEndTime = (event) => {
+    setEndDateTime(event.target.value);
+  };
+
+  const handleChangeDescription = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleChangeTitle = (event) => {
+    setTitle(event.target.value);
   };
 
   return (
@@ -33,13 +173,14 @@ function ToDo() {
         display: "flex",
       }}
     >
-      {console.log(start)}
+      {console.log(startDateTime)}
+      {console.log(endDateTime)}
       <Paper
         style={{
           padding: "10px",
           margin: "10px",
           display: "flex",
-          width: "50%",
+          width: "75%",
           flexDirection: "column",
         }}
       >
@@ -52,7 +193,7 @@ function ToDo() {
               alignItems: "center",
               alignContent: "center",
             }}
-          >  
+          >
             <TextField
               id="standard-textarea"
               label="Title"
@@ -61,37 +202,97 @@ function ToDo() {
               variant="standard"
               placeholder="Title"
               defaultValue=""
-              onChange={handleChange}
+              onChange={handleChangeTitle}
             />
 
-            <TextField
-              id="datetime-local"
-              label="Date Time"
-              type="datetime-local"
-              variant="standard"
-              defaultValue={dateTime}
-              onChange={handleChangeTime}
-              InputLabelProps={{
-                shrink: true,
+            {
+              start === 0 ?
+
+                <TextField
+                  id="datetime-local"
+                  label="Start Date Time"
+                  type="datetime-local"
+                  variant="standard"
+                  defaultValue={startDateTime}
+                  onChange={handleChangeStartTime}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  sx={{
+                    m: 1,
+                    width: "25ch"
+                  }}
+                />
+
+                :
+                null
+
+            }
+
+            {
+              start === 1 ?
+                <div>
+                  <TextField
+                    id="datetime-local"
+                    label="Start Date Time"
+                    type="datetime-local"
+                    variant="standard"
+                    defaultValue={startDateTime}
+                    onChange={handleChangeStartTime}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      m: 1,
+                      width: "25ch"
+                    }}
+                  />
+                  <TextField
+                    id="datetime-local"
+                    label="End Date Time"
+                    type="datetime-local"
+                    variant="standard"
+                    defaultValue={endDateTime}
+                    onChange={handleChangeEndTime}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      m: 1,
+                      width: "25ch"
+                    }}
+                  />
+
+                </div>
+                :
+                null
+            }
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
               }}
-            />
+            >
 
-<FormControl 
-    sx = {{width : "25ch"}}
-  >
-        <InputLabel id="demo-simple-select-label">Time Type</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          
-          label="Age"
-          onChange={handleChangeTimeType}
-        >
-          <MenuItem value={0}>Start</MenuItem>
-          <MenuItem value={1}>Start & End</MenuItem>
-          
-        </Select>
-      </FormControl>
+
+
+              <FormControl
+                sx={{ width: "25ch" }}
+              >
+                <InputLabel id="demo-simple-select-label">Time Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+
+                  label="Age"
+                  onChange={handleChangeTimeType}
+                >
+                  <MenuItem value={0}>Start</MenuItem>
+                  <MenuItem value={1}>Start & End</MenuItem>
+
+                </Select>
+              </FormControl>
+            </div>
           </div>
           <TextField
             id="standard-textarea"
@@ -102,7 +303,7 @@ function ToDo() {
             variant="outlined"
             multiline
             defaultValue=""
-            onChange={handleChange}
+            onChange={handleChangeDescription}
           />
           {/*<DateTimePicker
           label="Date  Time picker"
@@ -111,7 +312,22 @@ function ToDo() {
           renderInput={(params) => <TextField {...params} />}
         />*/}
         </Box>
-        {console.log(value)}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            alignContent: "center",
+          }}
+
+        >
+          <TagsInput selectedTags={selectedTags} tags={[]} />
+
+          <Button
+            onClick={handleSubmitStore}
+          >Submit</Button>
+        </div>
       </Paper>
     </div>
   );

@@ -6,7 +6,7 @@ import Home from "./components/common/Home";
 import Register from "./components/common/Register";
 import Navbar from "./components/templates/Navbar";
 import Profile from "./components/users/Profile";
-import ToDo from "./components/users/ToDo";
+import ToDoList from "./components/users/ToDoList";
 
 const Layout = () => {
   return (
@@ -28,7 +28,7 @@ function App() {
           <Route path="users" element={<UsersList />} />
           <Route path="register" element={<Register />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="todo" element={<ToDo />} />
+          <Route path="todo" element={<ToDoList />} />
         </Route>
       </Routes>
     </BrowserRouter>
