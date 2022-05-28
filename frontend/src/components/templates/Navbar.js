@@ -18,17 +18,20 @@ const Navbar = () => {
             sx={{ cursor: "pointer" }}
             onClick={() => navigate("/")}
           >
-            Canteen Portal
+            TaDa!
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Button color="inherit" onClick={() => navigate("/users")}>
+          {/* <Button color="inherit" onClick={() => navigate("/users")}>
             Users
-          </Button>
-          <Button color="inherit" onClick={() => navigate("/register")}>
+          </Button> */}
+          {/* <Button color="inherit" onClick={() => navigate("/register")}>
             Register
-          </Button>
-          <Button color="inherit" onClick={() => navigate("/profile")}>
+          </Button> */}
+          {/* <Button color="inherit" onClick={() => navigate("/profile")}>
             My Profile
+          </Button> */}
+          <Button color="inherit" onClick={() => navigate("/todo")}>
+            ToDo
           </Button>
         </Toolbar>
       </AppBar>

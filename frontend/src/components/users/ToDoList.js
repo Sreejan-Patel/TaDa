@@ -2,32 +2,20 @@ import axios from 'axios'
 import {useEffect, useState} from 'react'
 import ToDoView from './ToDoView'
 import ToDo from './ToDo'
+import Filter from './Filter'
 
 function ToDoList() {
-
-    const [todos, setTodos] = useState([])
-    useEffect(() => {
-        axios
-        .get('http://localhost:4000/todo/all')
-        .then(res => {
-            console.log(res.data);
-            setTodos(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-        }
-        )
-    }, [])
-
 
   return (
     <div>
         <ToDo />
-        {
+        <Filter />
+        
+        {/* {
             todos.map(todo => (
                 <ToDoView key={todo.id} todo={todo} />
             ))
-        }
+        } */}
     </div>
   )
 }

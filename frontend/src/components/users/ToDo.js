@@ -169,8 +169,8 @@ function ToDo() {
   return (
     <div
       style={{
-        flexDirection: "column",
         display: "flex",
+        flexDirection: "column",
       }}
     >
       {console.log(startDateTime)}

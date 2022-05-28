@@ -12,105 +12,6 @@ import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 import ToDo from "./ToDo";
 
-const TagsInput = props => {
-    const [tags, setTags] = useState(props.tags);
-    console.log(tags);
-    const removeTags = indexToRemove => {
-        setTags([...tags.filter((_, index) => index !== indexToRemove)]);
-    };
-    const addTags = event => {
-        if (event.target.value !== "") {
-            setTags([...tags, event.target.value]);
-            props.selectedTags([...tags, event.target.value]);
-            event.target.value = "";
-        }
-    };
-    return (
-        <div className="tags-input"
-            style={{
-                display: "flex",
-                flexDirection: "row",
-            }}
-        >
-            <input
-                type="text"
-                onKeyUp={event => event.key === "Enter" ? addTags(event) : null}
-                placeholder="Press enter to add tags"
-                style={{
-                    height: '2em',
-                    marginTop: '0.5em',
-                    marginRight: '0.5em',
-                }}
-            />
-            <ul id="tags"
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    listStyle: "none",
-                    padding: 0,
-                    margin: 0,
-                }}
-
-            >
-                {tags.map((tag, index) => (
-
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            backgroundColor: "#0000ff",
-                            borderRadius: "1em",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginRight: "1em",
-                            padding: '0.01em',
-                            marginTop: "0.5em",
-
-                        }}
-                    >
-                        <h5
-                            style={{
-                                marginTop: '0em',
-                                marginRight: "0.25px",
-                                marginBottom: "0px",
-
-                                color: "white",
-                                padding: "5px",
-                                borderRadius: "5px",
-
-
-                                marginLeft: "5px",
-                                wordSpacing: "10px",
-
-                            }}
-                        >{tag}</h5>
-
-                        <h5 onClick={() => removeTags(index)}
-                            style={{
-                                marginTop: "0em",
-                                marginRight: "10px",
-                                marginBottom: "0px",
-                                backgroundColor: "#000055",
-                                color: "red",
-                                padding: "5px",
-                                borderRadius: "150px",
-                                padding: "0.25em",
-
-                                marginLeft: "5px",
-
-                            }}
-                        >x</h5>
-
-                    </div>
-
-
-                ))}
-            </ul>
-
-        </div>
-    );
-};
 
 function ToDoView(props) {
     const selectedTags = tags => {
@@ -125,46 +26,6 @@ function ToDoView(props) {
     const [tags, setTags] = useState([]);
     const [start, setStart] = useState(-1);
 
-
-    const handleSubmitStore = (event) => {
-        event.preventDefault();
-        const data = {
-            user_id: "1",
-            title: title,
-            description: description,
-            start: start,
-            start_time: startDateTime,
-            end_time: endDateTime,
-            tags: tags,
-
-        }
-        console.log(data);
-        axios.post('http://localhost:4000/todo/store', data)
-            .then(res => {
-
-                console.log(res.data);
-            }
-            )
-    }
-
-    const handleChangeTimeType = (event) => {
-        setStart(event.target.value);
-    };
-    const handleChangeStartTime = (event) => {
-        setStartDateTime(event.target.value);
-    };
-
-    const handleChangeEndTime = (event) => {
-        setEndDateTime(event.target.value);
-    };
-
-    const handleChangeDescription = (event) => {
-        setDescription(event.target.value);
-    };
-
-    const handleChangeTitle = (event) => {
-        setTitle(event.target.value);
-    };
 
     return (
         <div
@@ -194,16 +55,6 @@ function ToDoView(props) {
                             alignContent: "center",
                         }}
                     >
-                        {/* <TextField
-              id="standard-textarea"
-              label="Title"
-              sx={{ m: 1, width: "25ch" }}
-              margin="normal"
-              variant="standard"
-              placeholder="Title"
-              defaultValue=""
-              onChange={handleChangeTitle}
-            /> */}
                         <h3
                             style={{
                                 m: 1,
@@ -213,70 +64,6 @@ function ToDoView(props) {
                         >
                             {props.todo.title}
                         </h3>
-
-                        {/* {
-              start === 0 ?
-
-                <TextField
-                  id="datetime-local"
-                  label="Start Date Time"
-                  type="datetime-local"
-                  variant="standard"
-                  defaultValue={startDateTime}
-                  onChange={handleChangeStartTime}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  sx={{
-                    m: 1,
-                    width: "25ch"
-                  }}
-                />
-
-                :
-                null
-
-            }
-
-            {
-              start === 1 ?
-                <div>
-                  <TextField
-                    id="datetime-local"
-                    label="Start Date Time"
-                    type="datetime-local"
-                    variant="standard"
-                    defaultValue={startDateTime}
-                    onChange={handleChangeStartTime}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    sx={{
-                      m: 1,
-                      width: "25ch"
-                    }}
-                  />
-                  <TextField
-                    id="datetime-local"
-                    label="End Date Time"
-                    type="datetime-local"
-                    variant="standard"
-                    defaultValue={endDateTime}
-                    onChange={handleChangeEndTime}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    sx={{
-                      m: 1,
-                      width: "25ch"
-                    }}
-                  />
-
-                </div>
-                :
-                null
-            } */}
-
 
                         {
                             props.todo.start === 1 ?
@@ -317,48 +104,13 @@ function ToDoView(props) {
                                 flexDirection: "row",
                             }}
                         >
-
-
-
-                            {/* <FormControl
-                sx={{ width: "25ch" }}
-              >
-                <InputLabel id="demo-simple-select-label">Time Type</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-
-                  label="Age"
-                  onChange={handleChangeTimeType}
-                >
-                  <MenuItem value={0}>Start</MenuItem>
-                  <MenuItem value={1}>Start & End</MenuItem>
-
-                </Select>
-              </FormControl> */}
                         </div>
                     </div>
-                    {/* <TextField
-            id="standard-textarea"
-            label="Description"
-            height="auto"
-            minRows={4}
-            margin="normal"
-            variant="outlined"
-            multiline
-            defaultValue=""
-            onChange={handleChangeDescription}
-          /> */}
 
                     <p>
                         {props.todo.description}
                     </p>
-                    {/*<DateTimePicker
-          label="Date  Time picker"
-          value={value}
-          onChange={handleChange}
-          renderInput={(params) => <TextField {...params} />}
-        />*/}
+
                 </Box>
                 <div
                     style={{
@@ -370,7 +122,6 @@ function ToDoView(props) {
                     }}
 
                 >
-                    {/* <TagsInput selectedTags={selectedTags} tags={[]} /> */}
 
                     {
                         <div
@@ -410,10 +161,6 @@ function ToDoView(props) {
 
                         </div>
                     }
-
-                    {/* <Button
-            onClick={handleSubmitStore}
-          >Submit</Button> */}
                 </div>
             </Paper >
         </div >

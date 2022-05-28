@@ -7,7 +7,7 @@ const PORT = 4000;
 const DB_NAME = "tada"
 
 // routes
-var TodoRouter = require("./routes/Todo");
+var TodoRouter = require("./routes/ToDo");
 
 app.use(cors());
 app.use(bodyParser.json());
