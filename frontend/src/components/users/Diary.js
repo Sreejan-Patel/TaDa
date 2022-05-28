@@ -16,6 +16,7 @@ function Diary() {
 
     const [diary, setDiary] = useState("");
     const [diaryData, setDiaryData] = useState([{}]);
+    const [diaryIndex, setDiaryIndex] = useState(-1);
     const [newData, setNewData] = useState({
         title: "",
         description: "",
@@ -28,6 +29,7 @@ function Diary() {
 
     const [startTimeState, setStartTimeState] = useState(0);
     const [endTimeState, setEndTimeState] = useState(0);
+    const [caretPosition, setCaretPosition] = useState(0);
     let dummyDate = "2022-05-20T16:15";
     // let newData = {
     //     title: "",
@@ -43,18 +45,43 @@ function Diary() {
     };
 
     const handleChangeStartTime = (event) => {
+        setNewData(prevState => ({
+            ...prevState,
+            start_time: event.target.value
 
-        // newData.start_time = event.target.value;
-        setNewData({ start_time: event.target.value });
-        // console.log(event.target.value);
-        // console.log(newData.start_time);
+        }));
 
+    };
+    const handleSubmitStartTime = (event) => {
+        setStartTimeState(0);
+        let newTime = newData.start_time.split("-")[2].split("T")[1].split(":")[0] + ":" + newData.start_time.split("-")[2].split("T")[1].split(":")[1];
+        let newDate = newData.start_time.split("-")[0] + "-" + newData.start_time.split("-")[1] + "-" + newData.start_time.split("-")[2].split("T")[0];
+        setDiary(diary + newTime + "," + newDate +"}");
 
+    };
 
+    const handleChangeEndTime = (event) => {
+        setNewData(prevState => ({
+            ...prevState,
+            end_time: event.target.value
+        }));
     }
+
+    const handleSubmitEndTime = (event) => {
+        setEndTimeState(0);
+        let newTime = newData.end_time.split("-")[2].split("T")[1].split(":")[0] + ":" + newData.end_time.split("-")[2].split("T")[1].split(":")[1];
+        let newDate = newData.end_time.split("-")[0] + "-" + newData.end_time.split("-")[1] + "-" + newData.end_time.split("-")[2].split("T")[0];
+        setDiary(diary + newTime + "," + newDate +"}");
+
+    };
 
     useEffect(() => {
         AnalyzeDiary();
+        var input = document.getElementById('myinput'); // or $('#myinput')[0]
+        var caretPos = input.selectionStart;
+        setCaretPosition(caretPos);
+        //console.log(caretPos);
+
     }, [diary]);
 
 
@@ -63,19 +90,24 @@ function Diary() {
 
         if (diary.split("\\todo{")[1] !== undefined) {
             newData.title = diary.split("\\todo{")[1].split("}")[0];
+            setDiaryIndex(diary.indexOf("\\todo{"))
+            console.log(diaryIndex+5);
+            let ind = (diary.split("\\todo{")[1].indexOf( "}")) + diaryIndex + 6;
+            console.log(ind);
             //console.log(newTitle);
 
             if (diary.split("\\desc{")[1] !== undefined) {
                 newData.description = diary.split("\\desc{")[1].split("}")[0];
             }
             if (diary.split("\\time{")[1] !== undefined) {
+                console.log("yes");
                 if (newData.start_time === dummyDate) {
                     setStartTimeState(1);
 
                 }
             }
             if (diary.split("\\end-time{")[1] !== undefined) {
-                if(newData.end_time===dummyDate){
+                if (newData.end_time === dummyDate) {
                     setEndTimeState(1);
                 }
             }
@@ -93,6 +125,7 @@ function Diary() {
             }
 
         }
+        console.log(newData);
         return (
 
             <ToDoView todo={newData} key={"1234"} />
@@ -118,9 +151,25 @@ function Diary() {
                     variant="outlined"
                     multiline
                     defaultValue=""
+                    value={diary}
+                    id = "myinput"
                     onChange={handleChangeDiary}
                     sx={{
                         width: "90%",
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === "ArrowRight") {
+                            var input = document.getElementById('myinput'); // or $('#myinput')[0]
+                            var caretPos = input.selectionStart;
+                            setCaretPosition(caretPos);
+                            console.log(caretPos);
+                        }
+                        if (e.key === "ArrowLeft") {
+                            var input = document.getElementById('myinput'); // or $('#myinput')[0]
+                            var caretPos = input.selectionStart;
+                            setCaretPosition(caretPos);
+                            console.log(caretPos);
+                        }
                     }}
                 />
 
@@ -128,7 +177,7 @@ function Diary() {
             <div>
                 {
                     startTimeState === 1 ?
-                        <TextField
+                        <div> <TextField
                             id="datetime-local"
                             label="Start Date Time"
                             type="datetime-local"
@@ -143,12 +192,17 @@ function Diary() {
                                 width: "25ch"
                             }}
                         />
+                            <Button
+                                onClick={handleSubmitStartTime}
+                            >Submit</Button>
+                        </div>
+
                         :
                         null
                 }
-                {/* {
+                {
                     endTimeState === 1 ?
-                        <TextField
+                        <div><TextField
                             id="datetime-local"
                             label="End Date Time"
                             type="datetime-local"
@@ -163,9 +217,13 @@ function Diary() {
                                 width: "25ch"
                             }}
                         />
+                            <Button
+                                onClick={handleSubmitEndTime}
+                            >Submit</Button>
+                        </div>
                         :
                         null
-                } */}
+                }
 
             </div>
 

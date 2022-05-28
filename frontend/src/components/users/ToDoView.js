@@ -91,15 +91,40 @@ function ToDoView(props) {
                                         alignSelf: 'flex-end'
                                     }}
                                 >
-                                    {console.log(props.todo.start_time)}
-                                    <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Date: {props.todo.start_time.split("-")[0]}-{props.todo.start_time.split("-")[1]}-{props.todo.start_time.split("-")[2].split("T")[0]}</h3>
-                                    <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Time: {props.todo.start_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.start_time.split("-")[2].split("T")[1].split(":")[1]} </h3>
+                                    {/* {console.log(props.todo.end_time)} */}
+                                    {
+                                        props.todo.start_time !== undefined ?
+                                            <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Date: {props.todo.start_time.split("-")[0]}-{props.todo.start_time.split("-")[1]}-{props.todo.start_time.split("-")[2].split("T")[0]}</h3>
+                                            :
+                                            null
+
+                                    }
+                                    {
+                                        props.todo.start_time !== undefined ?
+                                            <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Time: {props.todo.start_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.start_time.split("-")[2].split("T")[1].split(":")[1]} </h3>
+                                            :
+                                            null
+
+                                    }
 
                                     {/* {
                                         props.todo.start_time.split("-") !== undefined && props.todo.start_time.split("-") !== undefined && props.todo.start_time.split("-") !== undefined &&
                                             <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Date: {props.todo.start_time.split("-")[0]}-{props.todo.start_time.split("-")[1]}-{props.todo.start_time.split("-")[2].split("T")[0]}</h3>
                                             
                                     } */}
+
+                                    {
+                                        props.todo.end_time !== undefined ?
+                                            <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>End Date: {props.todo.end_time.split("-")[0]}-{props.todo.end_time.split("-")[1]}-{props.todo.end_time.split("-")[2].split("T")[0]}</h3>
+                                            :
+                                            null
+                                    }
+                                    {
+                                        props.todo.end_time !== undefined ?
+                                            <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>End Time:{props.todo.end_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.end_time.split("-")[2].split("T")[1].split(":")[1]}</h3>
+                                            :
+                                            null
+                                    }
                                 </div>
 
                         }
@@ -144,24 +169,28 @@ function ToDoView(props) {
                                 Tags:
 
                             </h3>
+                            {/* {console.log(props.todo.tags)} */}
                             {
-                                props.todo.tags.map(tag =>
+                                props.todo.tags !== undefined ?
+                                    props.todo.tags.map(tag =>
 
 
-                                    <h3
-                                        style={{
+                                        <h3
+                                            style={{
 
-                                            backgroundColor: "grey",
-                                            borderRadius: "5px",
-                                            padding: "5px",
-                                            marginRight: "5px",
-                                        }}
-                                    >
-                                        {tag.tag_name}
-                                        {console.log(tag.tag_name)}
-                                    </h3>
+                                                backgroundColor: "grey",
+                                                borderRadius: "5px",
+                                                padding: "5px",
+                                                marginRight: "5px",
+                                            }}
+                                        >
+                                            {tag.tag_name}
+                                            {console.log(tag.tag_name)}
+                                        </h3>
 
-                                )
+                                    )
+                                    :
+                                    null
                             }
 
 
