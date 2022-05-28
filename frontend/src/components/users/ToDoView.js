@@ -34,8 +34,8 @@ function ToDoView(props) {
                 display: "flex",
             }}
         >
-            {console.log(startDateTime)}
-            {console.log(endDateTime)}
+            {/* {console.log(startDateTime)} */}
+            {/* {console.log(endDateTime)} */}
             <Paper
                 style={{
                     padding: "10px",
@@ -75,25 +75,31 @@ function ToDoView(props) {
                                     }}
                                 >
 
-                                    
-                                    {console.log(props.todo.start_time)}
-                                    <h3 style={{marginLeft: '15px'}}>Start Date: {props.todo.start_time.split("-")[0]}-{props.todo.start_time.split("-")[1]}-{props.todo.start_time.split("-")[2].split("T")[0]}</h3>
-                                    <h3 style={{marginLeft: '15px'}}>Start Time: {props.todo.start_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.start_time.split("-")[2].split("T")[1].split(":")[1]} </h3>
-                                    <h3 style={{marginLeft: '15px'}}>End Date: {props.todo.end_time.split("-")[0]}-{props.todo.end_time.split("-")[1]}-{props.todo.end_time.split("-")[2].split("T")[0]}</h3>
-                                    <h3 style={{marginLeft: '15px'}}>End Time:{props.todo.end_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.end_time.split("-")[2].split("T")[1].split(":")[1]}</h3>
+
+                                    {/* {console.log(props.todo.start_time)} */}
+                                    <h3 style={{ marginLeft: '15px' }}>Start Date: {props.todo.start_time.split("-")[0]}-{props.todo.start_time.split("-")[1]}-{props.todo.start_time.split("-")[2].split("T")[0]}</h3>
+                                    <h3 style={{ marginLeft: '15px' }}>Start Time: {props.todo.start_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.start_time.split("-")[2].split("T")[1].split(":")[1]} </h3>
+                                    <h3 style={{ marginLeft: '15px' }}>End Date: {props.todo.end_time.split("-")[0]}-{props.todo.end_time.split("-")[1]}-{props.todo.end_time.split("-")[2].split("T")[0]}</h3>
+                                    <h3 style={{ marginLeft: '15px' }}>End Time:{props.todo.end_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.end_time.split("-")[2].split("T")[1].split(":")[1]}</h3>
                                 </div>
                                 :
                                 <div
-                                style={{
-                                    flexDirection: "row",
-                                    display: "flex",
-                                    
-                                    alignSelf: 'flex-end'
-                                }}
+                                    style={{
+                                        flexDirection: "row",
+                                        display: "flex",
+
+                                        alignSelf: 'flex-end'
+                                    }}
                                 >
-                                    <h3 style={{marginLeft: '15px', alignSelf: 'flex-end'}}>Start Date: {props.todo.start_time.split("-")[0]}-{props.todo.start_time.split("-")[1]}-{props.todo.start_time.split("-")[2].split("T")[0]}</h3>
-                                    <h3 style={{marginLeft: '15px', alignSelf: 'flex-end'}}>Start Time: {props.todo.start_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.start_time.split("-")[2].split("T")[1].split(":")[1]} </h3>
-                                    
+                                    {console.log(props.todo.start_time)}
+                                    <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Date: {props.todo.start_time.split("-")[0]}-{props.todo.start_time.split("-")[1]}-{props.todo.start_time.split("-")[2].split("T")[0]}</h3>
+                                    <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Time: {props.todo.start_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.start_time.split("-")[2].split("T")[1].split(":")[1]} </h3>
+
+                                    {/* {
+                                        props.todo.start_time.split("-") !== undefined && props.todo.start_time.split("-") !== undefined && props.todo.start_time.split("-") !== undefined &&
+                                            <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Date: {props.todo.start_time.split("-")[0]}-{props.todo.start_time.split("-")[1]}-{props.todo.start_time.split("-")[2].split("T")[0]}</h3>
+                                            
+                                    } */}
                                 </div>
 
                         }

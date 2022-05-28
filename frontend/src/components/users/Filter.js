@@ -108,48 +108,48 @@ const TagsInput = props => {
 
 function Filter() {
 
-    const [todos, setTodos] = useState([]);
-    useEffect(() => {
-        axios
-        .get('http://localhost:4000/todo/all')
-        .then(res => {
-            console.log(res.data);
-            setTodos(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-        }
-        )
-    }, [])
+  const [todos, setTodos] = useState([]);
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/todo/all')
+      .then(res => {
+        console.log(res.data);
+        setTodos(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      }
+      )
+  }, [])
 
 
 
 
 
-      const selectedTags = tags => {
-        console.log(tags);
-        setTags(tags);
-      };
-      const [title, setTitle] = useState("");
-      const [description, setDescription] = useState("");
-      const [startDateTime, setStartDateTime] = useState(new Date());
-      const [endDateTime, setEndDateTime] = useState(new Date());
-      const [tags, setTags] = useState([]);
-      const [start, setStart] = useState(-1);
+  const selectedTags = tags => {
+    console.log(tags);
+    setTags(tags);
+  };
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDateTime, setStartDateTime] = useState(new Date());
+  const [endDateTime, setEndDateTime] = useState(new Date());
+  const [tags, setTags] = useState([]);
+  const [start, setStart] = useState(-1);
 
-      return(
-          <div>
+  return (
+    <div>
 
-            <TagsInput selectedTags={selectedTags} tags={[]} />
-            <List items={todos} filter={tags} />
-          </div>
-    );
+      <TagsInput selectedTags={selectedTags} tags={[]} />
+      <List items={todos} filter={tags} />
+    </div>
+  );
 }
 
 const List = ({ items, filter }) => {
-  
+
   return (
-  
+
     <div>
       {items
         .filter(item => {
@@ -162,7 +162,7 @@ const List = ({ items, filter }) => {
           <ToDoView key={item.id} todo={item} />
         ))}
     </div>
-  ); 
+  );
 };
 
 export default Filter;

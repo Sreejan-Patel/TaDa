@@ -152,6 +152,7 @@ function ToDo() {
   };
   const handleChangeStartTime = (event) => {
     setStartDateTime(event.target.value);
+    console.log(startDateTime);
   };
 
   const handleChangeEndTime = (event) => {
