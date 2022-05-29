@@ -19,3 +19,64 @@ prioirtised tasks are the one which are important and urgent
 - latex like syntax is used to make ToDo tasks within the diary
 - Showing the previous incomplete tasks of yesterday's tasks, the user can make decisions on the tasks to complete today
 - Using Twillo API, we provide the user to show gratitude for a person, and send it to him via SMS while writing his journal
+
+## Installations
+
+### Node
+
+* For Linux:
+```
+curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+* For Mac:
+```
+brew install node
+```
+
+### MongoDB
+
+Install the community edition [here](https://docs.mongodb.com/manual/installation/#mongodb-community-edition-installation-tutorials).
+
+
+### React
+
+```
+npm install -g create-react-app
+```
+
+* To create a new React app:
+```
+create-react-app name_of_app
+```
+
+* To run the app, cd into the directory and do:
+```
+npm start
+```
+
+## Running the boilerplate
+
+* Run Mongo daemon:
+```
+sudo mongod
+```
+Mongo will be running on port 27017.
+
+
+* Run Express Backend:
+```
+cd backend/
+npm install
+npm start
+```
+
+* Run React Frontend:
+```
+cd frontend
+npm install/
+npm start
+```
+
+Navigate to [http://localhost:3000/](http://localhost:3000/) in your browser.
