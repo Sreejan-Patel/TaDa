@@ -124,6 +124,7 @@ function ToDo() {
   const [tags, setTags] = useState([]);
   const [start, setStart] = useState(-1);
   const [importance, setImportance] = useState(0);
+  const [urgency, setUrgency] = useState(0);
 
   const handleSubmitStore = (event) => {
     event.preventDefault();
@@ -135,7 +136,8 @@ function ToDo() {
       start_time: startDateTime,
       end_time: endDateTime,
       tags: tags,
-      importance: importance,
+      importance: parseInt(importance),
+      urgency: parseInt(urgency),
 
     }
     console.log(data);
@@ -149,6 +151,10 @@ function ToDo() {
   }
   const handleChangeImportance = (event) => {
     setImportance(event.target.value);
+  };
+
+  const handleChangeUrgency = (event) => {
+    setUrgency(event.target.value);
   };
   const handleChangeTimeType = (event) => {
     setStart(event.target.value);
@@ -334,25 +340,35 @@ function ToDo() {
           }}
         >
           <FormControl
-            sx={{
-              width: "25ch",
-              margin: "10px"
-            }}
+                sx={{ width: "25ch" }}
           >
-            <InputLabel id="demo-simple-select-label">Importance Level</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+                <InputLabel id="demo-simple-select-label">Importance</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Importance"
+                  onChange={handleChangeImportance}
+                >
+                  <MenuItem value={0}>Not Important</MenuItem>
+                  <MenuItem value={1}>Important</MenuItem>
 
-              label="Importance Level"
-              onChange={handleChangeImportance}
-            >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-            </Select>
+                </Select>
+          </FormControl>
+          <FormControl
+                sx={{ width: "25ch" }}
+          >
+                <InputLabel id="demo-simple-select-label">Urgency</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Urgency"
+                  onChange={handleChangeUrgency}
+                >
+                  <MenuItem value={0}>Not Urgent</MenuItem>
+                  <MenuItem value={1}>Urgent</MenuItem>
+
+                </Select>
+
           </FormControl>
         </div>
         <div><Button

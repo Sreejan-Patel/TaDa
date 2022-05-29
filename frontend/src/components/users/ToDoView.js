@@ -146,16 +146,67 @@ function ToDoView(props) {
                     <p>
                         {props.todo.description}
                     </p>
-                    <div style={{
-                        flexDirection: "row",
+                    <div
+                    style={{
                         display: "flex",
+                        flexDirection: "row",
                         justifyContent: "space-between",
                         alignItems: "center",
                         alignContent: "center",
-                    }}>
-                        <b>Importance Level :
-                            {props.todo.importance}</b>
-                    </div>
+                    }}
+                >
+                    {
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                            }}
+                        >
+                            <h3
+                                style={{
+                                    margin: "5px",
+                                    }}
+                            >
+                                Importance:
+                            </h3>
+                            <h3
+                                style={{
+                                    margin: "5px",
+                                    }}
+                            >
+                                {props.todo.importance}
+                            </h3>
+                        </div>
+
+
+
+
+                    }
+                    {   
+                        <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                        }}
+                    >
+                        <h3
+                            style={{
+                                margin: "5px",
+                                }}
+                        >
+                            Urgency:
+                        </h3>
+                        <h3
+                            style={{
+                                margin: "5px",
+                                }}
+                        >
+                            {props.todo.urgency}
+                        </h3>
+                        </div>
+                    }
+
+                </div>
 
                 </Box>
                 <div

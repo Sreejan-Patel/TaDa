@@ -41,6 +41,10 @@ const TodoSchema = new Schema({
         type: Number,
         required: true
     },
+    urgency: {
+        type: Number,
+        required: true
+    },
     status: {
         type: Number,
         required: false

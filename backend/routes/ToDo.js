@@ -42,6 +42,7 @@ router.post("/store", function (req, res) {
         end_time: req.body.end_time,
         tags: tags1,
         importance: req.body.importance,
+        urgency: req.body.urgency,
     });
     console.log(req.body.importance);
     todo.save(function (err) {
