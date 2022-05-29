@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useRef} from "react";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -27,24 +27,37 @@ function Diary() {
 
     // })
 
+    
+
     const [newDataArray, setNewDataArray] = useState([{}]);
     const [startTimeState, setStartTimeState] = useState(0);
     const [endTimeState, setEndTimeState] = useState(0);
     const [caretPosition, setCaretPosition] = useState(0);
+    const [backslash, setBackslash] = useState(0);
     let dummyDate = "2022-05-20T16:15";
     let newArr = [{}];
 
-    // let newData = {
-    //     title: "",
-    //     description: "",
-    //     start: 0,
-    //     start_time: "2022-05-20T16:15",
-    //     end_time: "2022-05-20T16:15",
-    //     tags: []
-    // }
+    let newData = {
+        title: "",
+        description: "",
+        start: 0,
+        start_time: "2022-05-20T16:15",
+        end_time: "2022-05-20T16:15",
+        tags: []
+    }
+
+    const checkSyntax = (event) => {
+        if (event.target.value.slice(-1) === '\\') {
+            setBackslash(1);
+        } else {
+            setBackslash(0);
+        }
+    };
 
     const handleChangeDiary = (event) => {
         setDiary(event.target.value);
+        console.log(event.target.value);
+        checkSyntax(event);
     };
 
     const handleChangeStartTime = (event) => {
@@ -98,14 +111,16 @@ function Diary() {
 
     useEffect(() => {
         AnalyzeDiary();
+        AnalyzeBackSlash();
         // var input = document.getElementById('myinput'); // or $('#myinput')[0]
         // var caretPos = input.selectionStart;
         // setCaretPosition(caretPos);
         setNewDataArray(newArr);
+        setBackslash(backslash);
+
         //console.log(caretPos);
 
     }, [diary]);
-
 
     const AnalyzeDiary = () => {
         //console.log(newData);
@@ -216,6 +231,49 @@ function Diary() {
 
     }
 
+    const AnalyzeBackSlash = () => {
+        return (
+            
+                backslash === 1 ?
+                    <div>
+                        <button onClick={() => {
+                            setBackslash(0);
+                            setDiary(diary + "todo{");
+                        }}>
+                            Todo
+                        </button>
+                        <button onClick={() => {
+                            setBackslash(0);
+                            setDiary(diary + "desc{");
+                        }}>
+                            Desc
+                        </button>
+                        <button onClick={() => {
+                            setBackslash(0);
+                            setDiary(diary + "time{");
+                        }}>
+                            Time
+                        </button>
+                        <button onClick={() => {
+                            setBackslash(0);
+                            setDiary(diary + "end-time{");
+                        }}>
+                            End-Time
+                        </button>
+                        <button onClick={() => {
+                            setBackslash(0);
+                            setDiary(diary + "tags{");
+                        }}>
+                            Tags
+                        </button>
+                    </div>
+                    :
+                    <div>
+
+                    </div>
+        )
+    }
+
 
     return (
         <div>
@@ -232,7 +290,6 @@ function Diary() {
                     margin="normal"
                     variant="outlined"
                     multiline
-
                     value={diary}
                     id="myinput"
                     onChange={handleChangeDiary}
@@ -253,9 +310,11 @@ function Diary() {
                             console.log(caretPos);
                         }
                     }}
+                    
                 />
 
             </div>
+            
             <div>
                 {
                     startTimeState === 1 ?
@@ -308,7 +367,7 @@ function Diary() {
                 }
 
             </div>
-
+            <AnalyzeBackSlash />
             <AnalyzeDiary />
         </div>
 
