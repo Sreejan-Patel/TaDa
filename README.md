@@ -5,6 +5,9 @@ At every night the user needs to write journal like they usually do. And if they
 ## How we built it
 This website was built using MERN stack and also used twilio API for messaging.
 
+## Video Link
+https://drive.google.com/drive/folders/1LD0iObHCldaWd9uML4W3zAO8dN0VINtO?usp=sharing
+
 # Features
 
 ## ToDo

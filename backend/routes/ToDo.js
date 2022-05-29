@@ -99,7 +99,7 @@ router.post("/yesterday_todos", function (req, res) {
             let yest_todos = [];
             for (let i = 0; i < todos.length; i++) {
                 let start_date = todos[i].start_time.getDate();
-                if (start_date == curr_date-1) {
+                if (start_date == curr_date) {
                     yest_todos.push(todos[i]);
                 }
             }
