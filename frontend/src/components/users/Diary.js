@@ -9,10 +9,10 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from "@mui/material/InputLabel";
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import axios from "axios";
 import ToDoView from "./ToDoView";
 import YesterdayToDo from "./YesterdayToDo";
-
 
 
 
@@ -228,7 +228,8 @@ function Diary() {
                 start_time: "2022-05-20T16:15",
                 end_time: "2022-05-20T16:15",
                 tags: [],
-                importance: 0
+                importance: -1,
+                urgency: -1,
 
             }
             // console.log( newDataArray[i]);
@@ -283,6 +284,9 @@ function Diary() {
                 }
                 if (diary.split("\\importance{")[i + 1] !== undefined) {
                     newData.importance = diary.split("\\importance{")[i + 1].split("}")[0];
+                }
+                if(diary.split("\\urgency{")[i + 1] !== undefined){
+                    newData.urgency = diary.split("\\urgency{")[i + 1].split("}")[0];
                 }
             }
 
@@ -366,6 +370,13 @@ function Diary() {
                     }}>
                         importance
                     </Button>
+                    <Button onClick={() => {
+                        setBackslash(0);
+                        setDiary(diary + "urgency{");
+                    }}>
+                        urgency
+                    </Button>
+                    
                 </div>
                 :
                 <div>
@@ -377,8 +388,10 @@ function Diary() {
 
     return (
         <div>
+            
             <div>
                 <h1>Yesterday's</h1>
+                
                 <YesterdayToDo />
             </div>
 

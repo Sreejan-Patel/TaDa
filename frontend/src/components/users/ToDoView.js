@@ -147,66 +147,67 @@ function ToDoView(props) {
                         {props.todo.description}
                     </p>
                     <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        alignContent: "center",
-                    }}
-                >
-                    {
-                        <div
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                            }}
-                        >
-                            <h3
-                                style={{
-                                    margin: "5px",
-                                    }}
-                            >
-                                Importance:
-                            </h3>
-                            <h3
-                                style={{
-                                    margin: "5px",
-                                    }}
-                            >
-                                {props.todo.importance}
-                            </h3>
-                        </div>
-
-
-
-
-                    }
-                    {   
-                        <div
                         style={{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: "column",
+                            justifyContent: "flex-end",
+                            alignItems: "flex-end",
+                            // alignContent: "center",
                         }}
                     >
-                        <h3
-                            style={{
-                                margin: "5px",
-                                }}
-                        >
-                            Urgency:
-                        </h3>
-                        <h3
-                            style={{
-                                margin: "5px",
-                                }}
-                        >
-                            {props.todo.urgency}
-                        </h3>
-                        </div>
-                    }
+                        {
+                            <div
+                            // style={{
+                            //     display: "flex",
+                            //     flexDirection: "row",
+                            // }}
+                            >
+                                <h3
+                                    style={{
+                                        margin: "5px",
+                                    }}
+                                >
+                                    Importance:
 
-                </div>
+                                    {
+                                        props.todo.importance !== -1 ?
+                                            props.todo.importance
+                                            : null}
+                                </h3>
+                            </div>
+
+
+
+
+                        }
+                        {
+                            <div
+                            // style={{
+                            //     display: "flex",
+                            //     flexDirection: "row",
+                            // }}
+                            >
+                                <h3
+                                    style={{
+                                        margin: "5px",
+                                    }}
+                                >
+                                    Urgency:
+
+
+
+                                    {
+                                        props.todo.urgency !== -1 ?
+
+                                            props.todo.urgency
+                                            : null
+                                    }
+
+                                </h3>
+                            </div>
+                        }
+
+                    </div>
 
                 </Box>
                 <div

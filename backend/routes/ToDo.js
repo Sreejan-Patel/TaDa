@@ -71,7 +71,9 @@ router.post("/store_new", function (req, res) {
         start_time: req.body.start_time,
         end_time: req.body.end_time,
         tags: req.body.tags,
-        importance: req.body.importance
+        importance: req.body.importance,
+        urgency: req.body.urgency
+
     });
     console.log(req.body.tags);
     todo.save(function (err) {
