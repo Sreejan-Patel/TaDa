@@ -13,6 +13,10 @@ import axios from "axios";
 import ToDoView from "./ToDoView";
 import YesterdayToDo from "./YesterdayToDo";
 
+
+
+
+
 function Diary() {
 
     const [diary, setDiary] = useState("");
@@ -37,7 +41,8 @@ function Diary() {
     const [backslash, setBackslash] = useState(0);
     let dummyDate = "2022-05-20T16:15";
     let newArr = [{}];
-
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [message, setMessage] = useState("");
     let newData = {
         user_id: "1",
         title: "",
@@ -46,6 +51,12 @@ function Diary() {
         start_time: "2022-05-20T16:15",
         end_time: "2022-05-20T16:15",
         tags: []
+    }
+    const handleChangePhoneNumber = (event) => {
+        setPhoneNumber(event.target.value);
+    }
+    const handleChangeMessage = (event) => {
+        setMessage(event.target.value);
     }
 
     const checkSyntax = (event) => {
@@ -108,6 +119,48 @@ function Diary() {
         let newTime = newDataArray[newDataArray.length - 1].end_time.split("-")[2].split("T")[1].split(":")[0] + ":" + newDataArray[newDataArray.length - 1].end_time.split("-")[2].split("T")[1].split(":")[1];
         let newDate = newDataArray[newDataArray.length - 1].end_time.split("-")[0] + "-" + newDataArray[newDataArray.length - 1].end_time.split("-")[1] + "-" + newDataArray[newDataArray.length - 1].end_time.split("-")[2].split("T")[0];
         setDiary(diary + newTime + "," + newDate + "}");
+
+    };
+    const handleSubmitMessage = (event) => {
+        // fetch('/api/messages', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(this.state.message)
+        // })
+        //     .then(res => res.json())
+        // .then(data => {
+        //   if (data.success) {
+        //     this.setState({
+        //       error: false,
+        //       submitting: false,
+        //       message: {
+        //         to: '',
+        //         body: ''
+        //       }
+        //     });
+        //   } else {
+        //     this.setState({
+        //       error: true,
+        //       submitting: false
+        //     });
+        //   }
+        // });
+        let data = {
+            "to": phoneNumber,
+            "body": message
+        }
+        axios.post("http://localhost:4000/diary/api/messages", data)
+
+            .then(res => {
+                console.log(res);
+            }
+            )
+            .catch(err => {
+                console.log(err);
+            }
+            );
 
     };
 
@@ -174,7 +227,8 @@ function Diary() {
                 start: 0,
                 start_time: "2022-05-20T16:15",
                 end_time: "2022-05-20T16:15",
-                tags: []
+                tags: [],
+                importance: 0
 
             }
             // console.log( newDataArray[i]);
@@ -226,6 +280,9 @@ function Diary() {
                         tags1.push(newTag);
                     }
                     newData.tags = tags1;
+                }
+                if (diary.split("\\importance{")[i + 1] !== undefined) {
+                    newData.importance = diary.split("\\importance{")[i + 1].split("}")[0];
                 }
             }
 
@@ -303,6 +360,12 @@ function Diary() {
                     }}>
                         tags
                     </Button>
+                    <Button onClick={() => {
+                        setBackslash(0);
+                        setDiary(diary + "importance{");
+                    }}>
+                        importance
+                    </Button>
                 </div>
                 :
                 <div>
@@ -318,6 +381,7 @@ function Diary() {
                 <h1>Yesterday's</h1>
                 <YesterdayToDo />
             </div>
+
 
             <div>
                 <h1>Diary Entry</h1>
@@ -409,6 +473,7 @@ function Diary() {
                 }
 
             </div>
+
             <AnalyzeBackSlash />
             <AnalyzeDiary />
             <div>
@@ -416,6 +481,56 @@ function Diary() {
                     Submit Diary
                 </Button>
             </div>
+            <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+            }}>
+                <h2>Who are you grateful to?</h2>
+                <div> 
+                <TextField
+                    //id="standard-textarea"
+                    label="Phone Number"
+                    height="auto"
+                    //minRows={4}
+                    margin="normal"
+                    variant="outlined"
+                    //multiline
+                    //value={diary}
+                    id="myinput"
+                    onChange={handleChangePhoneNumber}
+                    sx={{
+                        width: "30%",
+                    }}
+                    
+
+                />
+                <TextField
+                    //id="standard-textarea"
+                    label="Message"
+                    height="auto"
+                    minRows={4}
+                    margin="normal"
+                    variant="outlined"
+                    multiline
+                    //value={diary}
+                    id="myinput"
+                    onChange={handleChangeMessage}
+                    sx={{
+                        width: "80%",
+                    }}
+                    
+
+                />
+                </div>
+            </div>
+
+            <div>
+                <Button onClick={handleSubmitMessage}>
+                    Thank them!!
+                </Button>
+            </div>
+
 
         </div>
 

@@ -33,10 +33,18 @@ const TodoSchema = new Schema({
         }
     ],
 
-    user_id:{
-        type:String,
-        required:true
-    }
+    user_id: {
+        type: String,
+        required: true
+    },
+    importance: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: Number,
+        required: false
+    },
 
 
 

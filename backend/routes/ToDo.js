@@ -40,9 +40,10 @@ router.post("/store", function (req, res) {
         start: req.body.start,
         start_time: req.body.start_time,
         end_time: req.body.end_time,
-        tags: tags1
+        tags: tags1,
+        importance: req.body.importance,
     });
-    console.log(tags1);
+    console.log(req.body.importance);
     todo.save(function (err) {
         if (err) {
             console.log(err);
@@ -68,7 +69,8 @@ router.post("/store_new", function (req, res) {
         start: req.body.start,
         start_time: req.body.start_time,
         end_time: req.body.end_time,
-        tags: req.body.tags
+        tags: req.body.tags,
+        importance: req.body.importance
     });
     console.log(req.body.tags);
     todo.save(function (err) {

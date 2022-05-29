@@ -123,7 +123,7 @@ function ToDo() {
   const [endDateTime, setEndDateTime] = useState(new Date());
   const [tags, setTags] = useState([]);
   const [start, setStart] = useState(-1);
-
+  const [importance, setImportance] = useState(0);
 
   const handleSubmitStore = (event) => {
     event.preventDefault();
@@ -135,6 +135,7 @@ function ToDo() {
       start_time: startDateTime,
       end_time: endDateTime,
       tags: tags,
+      importance: importance,
 
     }
     console.log(data);
@@ -146,7 +147,9 @@ function ToDo() {
       }
       )
   }
-
+  const handleChangeImportance = (event) => {
+    setImportance(event.target.value);
+  };
   const handleChangeTimeType = (event) => {
     setStart(event.target.value);
   };
@@ -274,9 +277,6 @@ function ToDo() {
                 flexDirection: "row",
               }}
             >
-
-
-
               <FormControl
                 sx={{ width: "25ch" }}
               >
@@ -325,10 +325,39 @@ function ToDo() {
         >
           <TagsInput selectedTags={selectedTags} tags={[]} />
 
-          <Button
-            onClick={handleSubmitStore}
-          >Submit</Button>
+
         </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <FormControl
+            sx={{
+              width: "25ch",
+              margin: "10px"
+            }}
+          >
+            <InputLabel id="demo-simple-select-label">Importance Level</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+
+              label="Importance Level"
+              onChange={handleChangeImportance}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <div><Button
+          onClick={handleSubmitStore}
+        >Submit</Button></div>
       </Paper>
     </div>
   );

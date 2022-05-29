@@ -94,16 +94,16 @@ function ToDoView(props) {
                                 >
                                     {/* {console.log(props.todo.end_time)} */}
                                     {
-                                         props.todo.start_time !== undefined &&props.todo.start_time !==dummyDate ?
-                                        //props.todo.start_time !== undefined ?
+                                        props.todo.start_time !== undefined && props.todo.start_time !== dummyDate ?
+                                            //props.todo.start_time !== undefined ?
                                             <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Date: {props.todo.start_time.split("-")[0]}-{props.todo.start_time.split("-")[1]}-{props.todo.start_time.split("-")[2].split("T")[0]}</h3>
                                             :
                                             null
 
                                     }
                                     {
-                                         props.todo.start_time !== undefined &&props.todo.start_time !==dummyDate?
-                                        //props.todo.start_time !== undefined ?
+                                        props.todo.start_time !== undefined && props.todo.start_time !== dummyDate ?
+                                            //props.todo.start_time !== undefined ?
                                             <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>Start Time: {props.todo.start_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.start_time.split("-")[2].split("T")[1].split(":")[1]} </h3>
                                             :
                                             null
@@ -117,15 +117,15 @@ function ToDoView(props) {
                                     } */}
 
                                     {
-                                        props.todo.end_time !== undefined &&props.todo.end_time !==dummyDate?
-                                        // props.todo.end_time !== undefined ?
+                                        props.todo.end_time !== undefined && props.todo.end_time !== dummyDate ?
+                                            // props.todo.end_time !== undefined ?
                                             <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>End Date: {props.todo.end_time.split("-")[0]}-{props.todo.end_time.split("-")[1]}-{props.todo.end_time.split("-")[2].split("T")[0]}</h3>
                                             :
                                             null
                                     }
                                     {
-                                        props.todo.end_time !== undefined &&props.todo.end_time !==dummyDate?
-                                        // props.todo.end_time !== undefined ?
+                                        props.todo.end_time !== undefined && props.todo.end_time !== dummyDate ?
+                                            // props.todo.end_time !== undefined ?
                                             <h3 style={{ marginLeft: '15px', alignSelf: 'flex-end' }}>End Time:{props.todo.end_time.split("-")[2].split("T")[1].split(":")[0]}:{props.todo.end_time.split("-")[2].split("T")[1].split(":")[1]}</h3>
                                             :
                                             null
@@ -146,6 +146,16 @@ function ToDoView(props) {
                     <p>
                         {props.todo.description}
                     </p>
+                    <div style={{
+                        flexDirection: "row",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        alignContent: "center",
+                    }}>
+                        <b>Importance Level :
+                            {props.todo.importance}</b>
+                    </div>
 
                 </Box>
                 <div
@@ -202,6 +212,7 @@ function ToDoView(props) {
                         </div>
                     }
                 </div>
+
             </Paper >
         </div >
     );
