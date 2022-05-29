@@ -1,12 +1,12 @@
 var express = require("express");
 var router = express.Router();
 
-
+require('dotenv').config();
 const Todo = require("../models/ToDo");
 const Diary = require("../models/Diary");
 const client = require('twilio')(
-    "AC8458895cb934eaebeddd748a5268205b",
-    "faa006ac8d33025c47f2d7c2f6fcfd0a"
+    process.env.REACT_APP_TWILIO_ACCOUNT_SID,
+    process.env.REACT_APP_TWILIO_AUTH_TOKEN
 );
 
 router.post("/store", function (req, res) {
