@@ -30,9 +30,13 @@ const Navbar = () => {
           {/* <Button color="inherit" onClick={() => navigate("/profile")}>
             My Profile
           </Button> */}
-          <Button color="inherit" onClick={() => navigate("/todo")}>
+          <Button color="inherit" onClick={() => navigate("/")}>
             ToDo
           </Button>
+          <Button color="inherit" onClick={() => navigate("/diary")}>
+            Diary
+          </Button>
+
         </Toolbar>
       </AppBar>
     </Box>

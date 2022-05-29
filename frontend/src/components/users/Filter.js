@@ -110,8 +110,11 @@ function Filter() {
 
   const [todos, setTodos] = useState([]);
   useEffect(() => {
+    let data = {
+      "user_id": "1",
+    }
     axios
-      .get('http://localhost:4000/todo/all')
+      .post('http://localhost:4000/todo/all', data)
       .then(res => {
         console.log(res.data);
         setTodos(res.data);

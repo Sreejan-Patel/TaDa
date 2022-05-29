@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 // Load User model
-const Todo = require("../models/Todo");
+const Todo = require("../models/ToDo");
 
 // GET request 
 // Getting all the users
@@ -15,8 +15,8 @@ const Todo = require("../models/Todo");
 // 		}
 // 	})
 // });
-router.get("/all", function(req, res) {
-    Todo.find(function(err, todos) {
+router.post("/all", function (req, res) {
+    Todo.find({user_id:req.body.user_id},function (err, todos) {
         if (err) {
             console.log(err);
         } else {
@@ -25,11 +25,11 @@ router.get("/all", function(req, res) {
     })
 });
 router.post("/store", function (req, res) {
-    let tags1=[];
+    let tags1 = [];
     console.log(req.body.tags);
-    for(let i=0;i<req.body.tags.length;i++){
-        let newTag={
-            tag_name:req.body.tags[i]
+    for (let i = 0; i < req.body.tags.length; i++) {
+        let newTag = {
+            tag_name: req.body.tags[i]
         }
         tags1.push(newTag);
     }
@@ -50,6 +50,59 @@ router.post("/store", function (req, res) {
             res.json(todo);
         }
     });
+
+});
+router.post("/store_new", function (req, res) {
+    let tags1 = [];
+    console.log(req.body.tags);
+    for (let i = 0; i < req.body.tags.length; i++) {
+        let newTag = {
+            tag_name: req.body.tags[i]
+        }
+        tags1.push(newTag);
+    }
+    const todo = new Todo({
+        user_id: req.body.user_id,
+        title: req.body.title,
+        description: req.body.description,
+        start: req.body.start,
+        start_time: req.body.start_time,
+        end_time: req.body.end_time,
+        tags: req.body.tags
+    });
+    console.log(req.body.tags);
+    todo.save(function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(todo);
+        }
+    });
+
+});
+
+router.post("/yesterday_todos", function (req, res) {
+
+    let curr_time = Date.now();
+    let dum = new Date(curr_time);
+    let curr_date = dum.getDate();
+
+    Todo.find({ user_id: req.body.user_id }, function (err, todos) {
+        if (err) {
+            console.log(err);
+        } else {
+            let yest_todos = [];
+            for (let i = 0; i < todos.length; i++) {
+                let start_date = todos[i].start_time.getDate();
+                if (start_date == curr_date-1) {
+                    yest_todos.push(todos[i]);
+                }
+            }
+            res.json(yest_todos);
+        }
+    }
+    );
+
 
 });
 

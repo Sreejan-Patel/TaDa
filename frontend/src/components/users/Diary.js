@@ -1,4 +1,4 @@
-import { useState, useEffect ,useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 import ToDoView from "./ToDoView";
+import YesterdayToDo from "./YesterdayToDo";
 
 function Diary() {
 
@@ -27,7 +28,7 @@ function Diary() {
 
     // })
 
-    
+
 
     const [newDataArray, setNewDataArray] = useState([{}]);
     const [startTimeState, setStartTimeState] = useState(0);
@@ -38,6 +39,7 @@ function Diary() {
     let newArr = [{}];
 
     let newData = {
+        user_id: "1",
         title: "",
         description: "",
         start: 0,
@@ -109,6 +111,40 @@ function Diary() {
 
     };
 
+    const handleSubmitDiary = (event) => {
+        event.preventDefault();
+        const data = {
+            description: diary,
+            user_id: "1"
+        }
+        axios.post("http://localhost:4000/diary/store", data)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        for (let i = 0; i < newDataArray.length; i++) {
+            if (newDataArray[i].start_time !== undefined && newDataArray[i].start_time !== dummyDate && newDataArray[i].end_time !== undefined && newDataArray[i].end_time !== dummyDate) {
+                newDataArray[i].start = 1;
+            }
+
+            console.log(newDataArray[i]);
+            axios.post("http://localhost:4000/todo/store_new", newDataArray[i])
+                .then(res => {
+                    console.log(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    };
+
+
+
+
+
+
     useEffect(() => {
         AnalyzeDiary();
         AnalyzeBackSlash();
@@ -132,6 +168,7 @@ function Diary() {
         for (var i = 0; i < no_of_todos; i++) {
             // console.log("here");
             const newData = {
+                user_id: "1",
                 title: "",
                 description: "",
                 start: 0,
@@ -142,10 +179,10 @@ function Diary() {
             }
             // console.log( newDataArray[i]);
             // console.log( newDataArray[i].start_time);
-            if ( newDataArray[i] !== undefined &&  newDataArray[i].start_time !== undefined && newDataArray[i].start_time !== dummyDate) {
+            if (newDataArray[i] !== undefined && newDataArray[i].start_time !== undefined && newDataArray[i].start_time !== dummyDate) {
                 console.log("oh");
-                newData.start_time =  newDataArray[i].start_time;
-                newData.end_time =  newDataArray[i].end_time;
+                newData.start_time = newDataArray[i].start_time;
+                newData.end_time = newDataArray[i].end_time;
             }
             //console.log(diary.split("\\todo{")[1]);
             if (diary.split("\\todo{")[1] !== undefined) {
@@ -233,54 +270,59 @@ function Diary() {
 
     const AnalyzeBackSlash = () => {
         return (
-            
-                backslash === 1 ?
-                    <div>
-                        <button onClick={() => {
-                            setBackslash(0);
-                            setDiary(diary + "todo{");
-                        }}>
-                            Todo
-                        </button>
-                        <button onClick={() => {
-                            setBackslash(0);
-                            setDiary(diary + "desc{");
-                        }}>
-                            Desc
-                        </button>
-                        <button onClick={() => {
-                            setBackslash(0);
-                            setDiary(diary + "time{");
-                        }}>
-                            Time
-                        </button>
-                        <button onClick={() => {
-                            setBackslash(0);
-                            setDiary(diary + "end-time{");
-                        }}>
-                            End-Time
-                        </button>
-                        <button onClick={() => {
-                            setBackslash(0);
-                            setDiary(diary + "tags{");
-                        }}>
-                            Tags
-                        </button>
-                    </div>
-                    :
-                    <div>
 
-                    </div>
+            backslash === 1 ?
+                <div>
+                    <Button onClick={() => {
+                        setBackslash(0);
+                        setDiary(diary + "todo{");
+                    }}>
+                        todo
+                    </Button>
+                    <Button onClick={() => {
+                        setBackslash(0);
+                        setDiary(diary + "desc{");
+                    }}>
+                        desc
+                    </Button>
+                    <Button onClick={() => {
+                        setBackslash(0);
+                        setDiary(diary + "time{");
+                    }}>
+                        time
+                    </Button>
+                    <Button onClick={() => {
+                        setBackslash(0);
+                        setDiary(diary + "end-time{");
+                    }}>
+                        end-time
+                    </Button>
+                    <Button onClick={() => {
+                        setBackslash(0);
+                        setDiary(diary + "tags{");
+                    }}>
+                        tags
+                    </Button>
+                </div>
+                :
+                <div>
+
+                </div>
         )
     }
 
 
     return (
         <div>
+            <div>
+                <h1>Yesterday's</h1>
+                <YesterdayToDo />
+            </div>
 
             <div>
                 <h1>Diary Entry</h1>
             </div>
+
             <div>
                 <TextField
                     //id="standard-textarea"
@@ -310,11 +352,11 @@ function Diary() {
                             console.log(caretPos);
                         }
                     }}
-                    
+
                 />
 
             </div>
-            
+
             <div>
                 {
                     startTimeState === 1 ?
@@ -369,6 +411,12 @@ function Diary() {
             </div>
             <AnalyzeBackSlash />
             <AnalyzeDiary />
+            <div>
+                <Button onClick={handleSubmitDiary}>
+                    Submit Diary
+                </Button>
+            </div>
+
         </div>
 
 

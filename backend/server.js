@@ -8,7 +8,7 @@ const DB_NAME = "tada"
 
 // routes
 var TodoRouter = require("./routes/ToDo");
-
+var DiaryRouter = require("./routes/Diary");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +22,7 @@ connection.once('open', function() {
 
 // setup API endpoints
 app.use("/todo", TodoRouter);
-
+app.use("/diary", DiaryRouter);
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
 });
